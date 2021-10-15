@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@mui/material";
+import { CssBaseline, Grid, Typography } from "@mui/material";
 import ChessboardWithLogic from "./Chessboard";
 import "./App.css";
 import { RecoilRoot } from "recoil";
@@ -6,6 +6,7 @@ import { RecoilRoot } from "recoil";
 function App() {
   return (
     <RecoilRoot>
+      <CssBaseline/>
       <Grid
         container
         className="App"
