@@ -7,6 +7,8 @@ export function FenTextfield() {
   return (
     <TextField
       disabled
+      multiline
+      fullWidth
       id="fen-textfield"
       label="FEN"
       variant="outlined"

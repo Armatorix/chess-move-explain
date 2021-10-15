@@ -1,5 +1,9 @@
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 
 export function Analyzer() {
-  return <Grid>XD</Grid>;
+  return <Grid>
+    <Grid>
+      <Typography variant="h5">Tactics</Typography>
+    </Grid>
+  </Grid>;
 }
