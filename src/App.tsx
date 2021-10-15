@@ -1,12 +1,14 @@
 import { CssBaseline, Grid, Typography } from "@mui/material";
-import ChessboardWithLogic from "./Chessboard";
-import "./App.css";
 import { RecoilRoot } from "recoil";
+import { Analyzer } from "./Analyzer";
+import "./App.css";
+import ChessboardWithLogic from "./Chessboard";
+import {FenTextfield} from "./FenTextfield";
 
 function App() {
   return (
     <RecoilRoot>
-      <CssBaseline/>
+      <CssBaseline />
       <Grid
         container
         className="App"
@@ -30,8 +32,10 @@ function App() {
           <Grid container item xs={12} md={8}>
             <ChessboardWithLogic />
           </Grid>
-          <Grid container item xs={12} md={4}>
+          <Grid container item direction="column" xs={12} md={4}>
             <Typography>Move explains</Typography>
+            <FenTextfield/>
+            <Analyzer />
           </Grid>
         </Grid>
       </Grid>
