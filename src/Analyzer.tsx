@@ -65,17 +65,13 @@ function getPieceValue(p: PieceType): Number {
       return 1;
     case "n":
       return 3;
-    case   "b" : 
+    case "b" : 
       return 3;
     case "r":
       return 5;
-    case  "q":
+    case "q":
       return 9;
     case "k":
       return 2137;
-    // case ChessInstance.:
-    default:
-      break;
   }
-  return 0;
 }
