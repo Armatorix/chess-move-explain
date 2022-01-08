@@ -20,7 +20,7 @@ interface BoardState {
 
 export function Analyzer(props: { chess: ChessInstance }) {
   console.log(props.chess.moves());
-  const xd = getBoardState(props.chess);
+  let xd = getBoardState(props.chess);
   console.log(xd);
   return (<Grid>
     <Grid>
@@ -33,17 +33,17 @@ function getBoardState(chess: ChessInstance):BoardState{
     WhitePieces: [],
     BlackPieces: []
   }
-  const board = chess.board();
+  let board = chess.board();
   for (var i = 0; i < 8; i++) {
     for (var j = 0; j < 8; j++) {
-      const p = board[i][j]
+      let p = board[i][j]
       if (p !== null){
         let piece:Piece = {
           Type: p.type,
           Row: i,
           Col: j,
           Value: getPieceValue(p.type),
-          Field: String.fromCharCode('a'.charCodeAt(0)+j, '1'.charCodeAt(0)+i),
+          Field: String.fromCharCode('a'.charCodeAt(0)+j, '1'.charCodeAt(0)+7-i),
           Attacks: [],
           Defends: [] 
         }
