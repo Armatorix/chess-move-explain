@@ -92,6 +92,7 @@ function setDefendsAndAttacks(s: BoardState) {
         case "q":
           break;
         case "k":
+          setKingDefendsAndAttacks(s, p1);
           break;
         case "p":
           break;
@@ -194,6 +195,26 @@ function setKnightDefendsAndAttacks(s: BoardState, p1: Piece) {
     } else {
       p1.Attacks.push(p2);
       p2.IsAttackedBy.push(p1);
+    }
+  }
+}
+
+function setKingDefendsAndAttacks(s: BoardState, p1: Piece) {
+  for (const i of [1, 0, -1]) {
+    for (const j of [1, 0, -1]) {
+      const col = p1.Col + i;
+      const row = p1.Row + j;
+      let p2 = s.GetPiece(col, row);
+      if (p2 === null) {
+        continue;
+      }
+      if (p1.Color === p2.Color) {
+        p1.Defends.push(p2);
+        p2.IsDefendedBy.push(p1);
+      } else {
+        p1.Attacks.push(p2);
+        p2.IsAttackedBy.push(p1);
+      }
     }
   }
 }
