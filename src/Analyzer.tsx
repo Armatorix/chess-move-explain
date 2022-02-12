@@ -98,6 +98,7 @@ function setDefendsAndAttacks(s: BoardState) {
           setKingDefendsAndAttacks(s, p1);
           break;
         case "p":
+          setPawnDefendsAndAttacks(s, p1);
           break;
       }
     }
@@ -274,6 +275,30 @@ function setRookDefendsAndAttacks(s: BoardState, p1: Piece) {
         p1.Attacks.push(p2);
         p2.IsAttackedBy.push(p1);
       }
+    }
+  }
+}
+
+function setPawnDefendsAndAttacks(s: BoardState, p1: Piece) {
+  // TODO add handling for en passant
+  let col = p1.Col;
+  let row = p1.Row;
+  if (p1.Color === White) {
+    row -= 1;
+  } else {
+    row += 1;
+  }
+  for (const i of [-1, 1]) {
+    let p2 = s.GetPiece(col + i, row);
+    if (p2 === null) {
+      continue;
+    }
+    if (p1.Color === p2.Color) {
+      p1.Defends.push(p2);
+      p2.IsDefendedBy.push(p1);
+    } else {
+      p1.Attacks.push(p2);
+      p2.IsAttackedBy.push(p1);
     }
   }
 }
