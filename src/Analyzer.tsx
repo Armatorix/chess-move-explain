@@ -89,8 +89,10 @@ function setDefendsAndAttacks(s: BoardState) {
           setBishopDefendsAndAttacks(s, p1);
           break;
         case "r":
+          setRookDefendsAndAttacks(s, p1);
           break;
         case "q":
+          setQueenDefendsAndAttacks(s, p1);
           break;
         case "k":
           setKingDefendsAndAttacks(s, p1);
@@ -248,6 +250,65 @@ function setBishopDefendsAndAttacks(s: BoardState, p1: Piece) {
   }
 }
 
+function setRookDefendsAndAttacks(s: BoardState, p1: Piece) {
+  for (const i of [-1, 0, 1]) {
+    for (const j of [-1, 0, 1]) {
+      if (j * i !== 0 || (j === 0 && i === 0)) {
+        continue;
+      }
+      let col = p1.Col;
+      let row = p1.Row;
+      let p2 = {} as Piece;
+      do {
+        col += i;
+        row += j;
+        p2 = s.GetPiece(col, row);
+      } while (boardRange(col) && boardRange(row) && p2 === null);
+      if (p2 === null) {
+        continue;
+      }
+      if (p1.Color === p2.Color) {
+        p1.Defends.push(p2);
+        p2.IsDefendedBy.push(p1);
+      } else {
+        p1.Attacks.push(p2);
+        p2.IsAttackedBy.push(p1);
+      }
+    }
+  }
+}
+
+function setQueenDefendsAndAttacks(s: BoardState, p1: Piece) {
+  for (const i of [-1, 0, 1]) {
+    for (const j of [-1, 0, 1]) {
+      if (j === 0 && i === 0) {
+        continue;
+      }
+      let col = p1.Col;
+      let row = p1.Row;
+      let p2 = {} as Piece;
+      do {
+        col += i;
+        row += j;
+        p2 = s.GetPiece(col, row);
+      } while (boardRange(col) && boardRange(row) && p2 === null);
+      if (p2 === null) {
+        continue;
+      }
+      if (p1.Color === p2.Color) {
+        p1.Defends.push(p2);
+        p2.IsDefendedBy.push(p1);
+      } else {
+        p1.Attacks.push(p2);
+        p2.IsAttackedBy.push(p1);
+      }
+    }
+  }
+}
 function boardRange(i: number): Boolean {
   return i <= 7 && i >= 0;
 }
+
+// REFACTOR NOTES:
+// bishops/rooks/queens got same algorithm for finding attacks/defs
+//
