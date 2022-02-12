@@ -281,6 +281,8 @@ function setRookDefendsAndAttacks(s: BoardState, p1: Piece) {
 
 function setPawnDefendsAndAttacks(s: BoardState, p1: Piece) {
   // TODO add handling for en passant
+  // pawn is in 3rd field from his first, another pawn is next to him
+  //  and in list of attacks there is this pawn
   let col = p1.Col;
   let row = p1.Row;
   if (p1.Color === White) {
