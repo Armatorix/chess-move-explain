@@ -86,6 +86,7 @@ function setDefendsAndAttacks(s: BoardState) {
           setKnightDefendsAndAttacks(s, p1);
           break;
         case "b":
+          setBishopDefendsAndAttacks(s, p1);
           break;
         case "r":
           break;
@@ -202,9 +203,37 @@ function setKnightDefendsAndAttacks(s: BoardState, p1: Piece) {
 function setKingDefendsAndAttacks(s: BoardState, p1: Piece) {
   for (const i of [1, 0, -1]) {
     for (const j of [1, 0, -1]) {
+      if (i === 0 && j === 0) {
+        continue;
+      }
       const col = p1.Col + i;
       const row = p1.Row + j;
       let p2 = s.GetPiece(col, row);
+      if (p2 === null) {
+        continue;
+      }
+      if (p1.Color === p2.Color) {
+        p1.Defends.push(p2);
+        p2.IsDefendedBy.push(p1);
+      } else {
+        p1.Attacks.push(p2);
+        p2.IsAttackedBy.push(p1);
+      }
+    }
+  }
+}
+
+function setBishopDefendsAndAttacks(s: BoardState, p1: Piece) {
+  for (const i of [1, -1]) {
+    for (const j of [1, -1]) {
+      let col = p1.Col;
+      let row = p1.Row;
+      let p2 = {} as Piece;
+      do {
+        col += i;
+        row += j;
+        p2 = s.GetPiece(col, row);
+      } while (boardRange(col) && boardRange(row) && p2 === null);
       if (p2 === null) {
         continue;
       }
