@@ -22,7 +22,7 @@ function AppRoot() {
     <Grid
       container
       className="App"
-      width="100%"
+      // width="100%"
       justifyContent="center"
       alignItems="center"
     >
@@ -52,7 +52,7 @@ function AppRoot() {
         <Grid container item direction="column" xs={12} md={5} spacing={10}>
           <FenTextfield />
           <MovesBox chess={chess} />
-          <Analyzer chess={chess}/>
+          <Analyzer chess={chess} />
         </Grid>
       </Grid>
     </Grid>

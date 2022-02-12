@@ -1,6 +1,5 @@
 import { ShortMove, Square } from "chess.js";
 import Chessboard from "chessboardjsx";
-import { useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { fenState, mouseHoverSquareState } from "./store";
 
@@ -24,9 +23,9 @@ export default function ChessboardWithLogic(props: {
       onMouseOverSquare={(square: Square) => {
         setHoverSquare(square);
       }}
-      onMouseOutSquare={() => {
-        setHoverSquare(null);
-      }}
+      // onMouseOutSquare={() => {
+      //   setHoverSquare(null);
+      // }}
       squareStyles={squareStyle}
     />
   );

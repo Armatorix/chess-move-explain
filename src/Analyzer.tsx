@@ -1,5 +1,8 @@
-import { Grid, Typography } from "@mui/material";
-import { ChessInstance, PieceType } from "chess.js";
+import { Chip, Grid, Stack, Typography } from "@mui/material";
+import { ChessInstance, PieceType, Square } from "chess.js";
+import { useRecoilValue } from "recoil";
+import { mouseHoverSquareState } from "./store";
+import { Icon } from "@iconify/react";
 
 const Black = 1;
 const White = 0;
@@ -23,15 +26,48 @@ type BoardState = {
   ChessInstance: ChessInstance;
   Board: any;
   GetPiece: any;
+  GetPieceByField: any;
 };
 
 export function Analyzer(props: { chess: ChessInstance }) {
-  let xd = getBoardState(props.chess);
-  console.log(xd);
+  const state = getBoardState(props.chess);
+  const hoverSqaure = useRecoilValue(mouseHoverSquareState);
+  const hoverPiece = state.GetPieceByField(hoverSqaure) as Piece | null;
   return (
     <Grid>
       <Grid>
-        <Typography variant="h5">Tactics</Typography>
+        {hoverPiece && (
+          <Grid
+            container
+            item
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Typography variant="h5">About {hoverSqaure}</Typography>
+            <Stack alignItems="center" direction="row" spacing={2}>
+              {hoverPiece.Attacks.map((p) => (
+                <Chip
+                  label={"Attacks " + p.Field}
+                  icon={<Icon icon="akar-icons:double-sword" />}
+                  color="warning"
+                  variant="outlined"
+                  size="small"
+                />
+              ))}
+              {hoverPiece.Defends.map((p) => (
+                <Chip
+                  label={"Defends " + p.Field}
+                  icon={<Icon icon="bi:shield" />}
+                  color="primary"
+                  variant="outlined"
+                  size="small"
+                />
+              ))}
+            </Stack>
+          </Grid>
+        )}
+        {/* <Typography variant="h5">Tactics</Typography> */}
       </Grid>
     </Grid>
   );
@@ -80,6 +116,14 @@ function getPositions(chess: ChessInstance): BoardState {
       return this.Pieces[p.color === "w" ? White : Black][
         this.ReverseMapping[row][col]
       ];
+    },
+    GetPieceByField: function (field: Square | null): Piece | null {
+      if (field === null) {
+        return null;
+      }
+      const col = field.charCodeAt(0) - "a".charCodeAt(0);
+      const row = 7 - (field.charCodeAt(1) - "1".charCodeAt(0));
+      return this.GetPiece(col, row);
     },
   };
   // get pieces positions
